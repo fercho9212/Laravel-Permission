@@ -12,6 +12,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <!-- Scripts -->
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+    <script src="https://use.fontawesome.com/9712be8772.js"></script>
 </head>
 <body>
     <div id="app">
@@ -42,17 +49,21 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @guest
+                        @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    --{{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        @role('Administrator') {{-- Laravel-permission blade helper --}}
+                                            <a href="#"><i class="fa fa-btn fa-unlock"></i>Admin</a>
+                                        @endrole
+
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -70,6 +81,20 @@
                 </div>
             </div>
         </nav>
+
+        @if(Session::has('flash_message'))
+            <div class="container">      
+                <div class="alert alert-success"><em> {!! session('flash_message') !!}</em>
+                </div>
+            </div>
+        @endif 
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">              
+                @include ('errors.list') {{-- Including error file --}}
+            </div>
+        </div>
+
 
         @yield('content')
     </div>
