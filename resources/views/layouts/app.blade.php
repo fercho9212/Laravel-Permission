@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
         <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -100,6 +100,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('plugins/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/popper.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
 </body>
 </html>
