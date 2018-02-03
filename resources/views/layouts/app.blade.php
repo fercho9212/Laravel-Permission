@@ -42,12 +42,40 @@
                     Dropdown
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    @if (Auth::check())
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                    @endif
+                    
                 <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Roles
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if (Auth::check())
+                        <a class="dropdown-item" href="{{ url('roles/create') }}">Crear</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                    @endif
+                
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Permisos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if (Auth::check())
+                        <a class="dropdown-item" href="{{ url('permissions') }}">Crear</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                    @endif         
+            </li>
+            
 
             </ul>
 
