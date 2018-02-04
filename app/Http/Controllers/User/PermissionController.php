@@ -43,10 +43,10 @@ class PermissionController extends Controller
         $request->validate([
             'name'=>'required'
         ]);
-        Permission::create($request->only('name'));
-        $roles=$request['roles'];
-        if(issets($roles)){
-            
+        $permissions=Permission::create($request->only('name'));
+        $roles=$request->roles;
+        if(isset($roles)){
+          $permissions->roles()->attach($roles); // Relaciona sync Eloquent
         }
         return redirect()->route('permissions.index');
     }
