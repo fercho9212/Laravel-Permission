@@ -75,6 +75,18 @@
                         <a class="dropdown-item" href="#">Another action</a>
                     @endif         
             </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Post
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if (Auth::check())
+                        <a class="dropdown-item" href="{{ url('post/') }}">Inicio</a>
+                        <a class="dropdown-item" href="{{ url('post/create') }}">Crear</a>
+                    @endif         
+            </li>
+
             
 
             </ul>

@@ -12,6 +12,12 @@
                     {{ Form::label('NOMBRE', 'NAME', array('class' => 'awesome'))}}
                     {{ Form::input('text', 'name', null,['class'=>'form-control']) }}
                 </div>
+                <div class="form-group">
+                    @foreach($permissions as $permission)
+                    {{ Form::checkbox('permissions[]',$permission->id)}}
+                    {{ Form::label($permission->name, ucfirst($permission->name)) }}<br>
+                    @endforeach
+                </div>
                     <br>
                 <div class="form-group">
                     {{ Form::submit('Save', array('class' => 'well span6 btn btn-primary')) }}

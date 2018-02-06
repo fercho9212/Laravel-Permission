@@ -35,7 +35,11 @@ class HomeController extends Controller
             'email'=>'required|email|unique:users',
             'password'=>'required|min:3',
         ]);
-        $user=User::create($request->only('name','email','password'));
+        $user=User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
         $roles=$request['roles'];
         if(isset($roles)){
             $user->syncRoles($roles);

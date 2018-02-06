@@ -41,3 +41,4 @@ Route::post('/home', 'HomeController@store');
 
 Route::resource('roles', 'User\RoleController');
 Route::resource('permissions', 'User\PermissionController');
+Route::resource('post', 'Dashboard\PostController');

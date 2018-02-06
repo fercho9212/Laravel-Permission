@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Models\Post;
 
-class RoleController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+        $this->middleware('auth')->except('index','show');
+    }
     public function index()
     {
-        echo "Holaaa";
+        $posts=Post::all();
+        return view('dashboard.posts.index',compact('posts'));
     }
 
     /**
@@ -26,9 +29,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $roles=Role::all();
-        $permissions=Permission::all();    
-        return view('dashboard/users/role/form_create',compact('roles','permissions'));
+        return view('dashboard.posts.create');
     }
 
     /**
@@ -39,19 +40,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required|min:3'
-        ]);
-        $role= new Role;
-        $role->name=$request->name;
-        $role->guard_name='web';
-        $role->save();
-        $permissions=$request['permissions'];
-        if(isset($permissions)){
-            $role->permissions()->attach($permissions);
-        }
-        \Session::flash('message', 'Registro Exitoso');
-        return redirect()->route('roles.create');
+        Post::create($request->all());
+        return redirect()->route('post.index');
+        
     }
 
     /**
@@ -62,7 +53,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        echo 'dsadsa';
     }
 
     /**
@@ -73,7 +64,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post=Post::findOrFail($id);
+        return view('dashboard.posts.edit',compact('post'));
     }
 
     /**
@@ -85,7 +77,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post=POst::findOrFail($id);
+        $post->title=$request->title;
+        $post->body=$request->body;
+        $post->save();
+        
+        return redirect()->route('post.index')->with('flash_message','POST edit');
+
     }
 
     /**
@@ -96,6 +94,10 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $post=Post::findOrFail($id);
+       $post->delete();
+       return redirect()->route('post.index')->with('flash_message',
+             'Article successfully deleted');
+
     }
 }
